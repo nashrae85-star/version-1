@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -217,23 +217,68 @@ footer{border-top:1px solid var(--brd);padding:52px 48px 28px;background:var(--b
   [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important}
   [style*="grid-template-columns:repeat(3, 1fr)"]{grid-template-columns:1fr!important}
 }
+
+/* INTRO MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal-box{background:var(--bg2);border:1px solid var(--brd2);border-radius:20px;padding:36px;max-width:440px;width:100%;position:relative}
+.modal-box h3{font-family:"Syne",sans-serif;font-size:22px;font-weight:800;margin-bottom:8px}
+.modal-box p{font-size:14px;color:var(--t2);margin-bottom:20px;line-height:1.6}
+.modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--t2);font-size:20px;cursor:pointer}
+.modal-contact-link{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--bg);border:1px solid var(--brd);border-radius:10px;margin-bottom:8px;transition:border-color .2s}
+.modal-contact-link:hover{border-color:var(--brd2)}
+.modal-contact-link span{font-size:13px;color:var(--t2)}
+.modal-contact-link b{display:block;font-size:14px;color:var(--tx)}
+
+/* HAMBURGER */
+.hbg{display:none;flex-direction:column;gap:5px;background:transparent;border:none;cursor:pointer;padding:6px}
+.hbg span{display:block;width:22px;height:2px;background:var(--tx);border-radius:2px;transition:all .2s}
+.hbg.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hbg.open span:nth-child(2){opacity:0}
+.hbg.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;top:62px;left:0;right:0;z-index:299;background:rgba(7,9,15,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd);padding:16px 20px;flex-direction:column;gap:4px}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:15px;color:var(--t2);padding:11px 14px;border-radius:10px;cursor:pointer;transition:color .15s,background .15s}
+.mob-menu a:hover{color:var(--tx);background:var(--bg3)}
+.mob-menu .mob-cta{color:var(--b2);border:1.5px solid var(--brd2);text-align:center;margin-top:6px;font-weight:600}
+
+@media(max-width:768px){
+  nav{padding:0 18px}
+  .nm{display:none}
+  .ng{display:none}
+  .nb{display:none}
+  .hbg{display:flex}
+  .w,.sw{padding:72px 20px}
+  .hinner{grid-template-columns:1fr}.hr{display:none}
+  .hero{padding:90px 20px 60px}
+  .hbtns{flex-direction:column}
+  .bm-,.bl-{width:100%;text-align:center;justify-content:center}
+  .steps{grid-template-columns:1fr;background:transparent}
+  .stp{border:1px solid var(--brd);border-radius:12px;margin-bottom:8px}
+  .tcg{grid-template-columns:1fr}
+  .bcg{grid-template-columns:1fr}
+  .fr{grid-template-columns:1fr}
+  footer{padding:16px 20px}
+  h1{letter-spacing:-2px}
+  h2{letter-spacing:-1.5px}
+  .cr{grid-template-columns:1.5fr 1fr 1fr}
+  .cd{padding:12px 12px;font-size:11.5px}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important}
+  [style*="grid-template-columns:repeat(3, 1fr)"]{grid-template-columns:1fr!important}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ── SUPABASE CONFIG ──
-// Replace these with your actual Supabase project URL and anon key
-const SUPABASE_URL = 'https://phdurwazjpkuengnqyjo.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoZHVyd2F6anBrdWVuZ25xeWpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NDc3NDIsImV4cCI6MjA5MTUyMzc0Mn0.GhXi5NR4q4VQwm8fTrTssjzWEcYoTEnfev2b37V9KtU
-';
-var sb = null;
-try { sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) {}
-
-async function saveToSupabase(table, data) {
-  if (!sb) return false;
-  try {
-    const { error } = await sb.from(table).insert([data]);
-    return !error;
-  } catch(e) { return true; }
+var sb = supabase.createClient(
+  "https://phdurwazjpkuengnqyjo.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoZHVyd2F6anBrdWVuZ25xeWpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NDc3NDIsImV4cCI6MjA5MTUyMzc0Mn0.GhXi5NR4q4VQwm8fTrTssjzWEcYoTEnfev2b37V9KtU"
+);
+function saveToSupabase(table, data) {
+  return sb.from(table).insert([data]).then(function(res) {
+    if (res.error) throw res.error;
+    return res;
+  });
 }
 </script>
 </head>
@@ -246,14 +291,24 @@ async function saveToSupabase(table, data) {
     <a onclick="go('talent')" id="nl-talent">Talent</a>
     <a onclick="go('companies')" id="nl-companies">For Companies</a>
     <a onclick="go('mission')" id="nl-mission">Mission</a>
-    <a onclick="go('blog')" id="nl-blog">Blog</a>
+    
     <a onclick="go('about')" id="nl-about">About</a>
   </div>
   <div class="nr">
     <button class="ng" onclick="go('contact')">Contact</button>
     <button class="nb" onclick="go('companies')">Hire Talent</button>
+    <button class="hbg" id="hbg" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mob-menu" id="mob-menu">
+  <a onclick="go('talent');toggleMenu()">Talent</a>
+  <a onclick="go('companies');toggleMenu()">For Companies</a>
+  <a onclick="go('mission');toggleMenu()">Mission</a>
+  <a onclick="go('about');toggleMenu()">About</a>
+  <a onclick="go('contact');toggleMenu()">Contact</a>
+  <a onclick="go('apply');toggleMenu()" class="mob-cta">Join Talent Pool</a>
+  <a onclick="go('companies');toggleMenu()" class="mob-cta" style="background:var(--b);border-color:var(--b);color:#fff;margin-top:4px">Hire Talent</a>
+</div>
 
 <!-- HOME -->
 <div class="page active" id="page-home">
@@ -275,7 +330,7 @@ async function saveToSupabase(table, data) {
           <div class="hc">
             <div class="hct">
               <div class="hcl"><img src="data:image/png;base64,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" alt="logo"/>hirelRecruit</div>
-              <span class="hcbadge">&#9679; Vetted</span>
+              <span class="hcbadge">Vetted</span>
             </div>
             <div class="hcname">Aryan K.</div>
             <div class="hcrole">FULL-STACK ENGINEER &middot; SELF-TAUGHT</div>
@@ -315,24 +370,24 @@ async function saveToSupabase(table, data) {
         <div><div class="lbl rv">Featured Builders</div><h2 class="rv" style="margin-bottom:0">Talent that <span class="c">ships.</span></h2></div>
         <button class="bl- rv" onclick="go('talent')" style="font-size:14px;padding:10px 20px">View All &rarr;</button>
       </div>
-      <div class="tcg"><div class="tc" onclick="go('contact')">
+      <div class="tcg"><div class="tc" onclick="showIntro('Aryan K.')">
       <div class="tc-h"><div class="av">A</div><span class="ba open">Open to Work</span></div>
       <div class="tc-n">Aryan K.</div><div class="tc-r">Full-Stack Engineer</div>
       <ul class="tc-a"><li>Built logistics dashboard — ↓80% manual work</li><li>3 SaaS MVPs shipped solo in under 6 weeks</li></ul>
       <div class="tc-s"><span class="sk">React</span><span class="sk">Node.js</span><span class="sk">PostgreSQL</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div><div class="tc" onclick="go('contact')">
       <div class="tc-h"><div class="av">S</div><span class="ba open">Open to Work</span></div>
       <div class="tc-n">Sara M.</div><div class="tc-r">Product Designer</div>
       <ul class="tc-a"><li>Fintech onboarding redesign — ↑44% completion</li><li>Led design for 0→1 consumer app, 12k users</li></ul>
       <div class="tc-s"><span class="sk">Figma</span><span class="sk">UX Research</span><span class="sk">Design Systems</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div><div class="tc" onclick="go('contact')">
       <div class="tc-h"><div class="av">R</div><span class="ba soon">Available Soon</span></div>
       <div class="tc-n">Rohan V.</div><div class="tc-r">ML Engineer</div>
       <ul class="tc-a"><li>Churn model flagged 23% of at-risk accounts</li><li>NLP classifier trained on 2M+ records</li></ul>
       <div class="tc-s"><span class="sk">Python</span><span class="sk">PyTorch</span><span class="sk">MLOps</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div></div>
     </div>
   </section>
@@ -377,42 +432,42 @@ async function saveToSupabase(table, data) {
       <select style="font-size:13px;background:var(--bg2);border:1.5px solid var(--brd);border-radius:8px;padding:8px 14px;color:var(--t2);outline:none;cursor:pointer;font-family:'Inter',sans-serif"><option>All Availability</option><option>Open to Work</option><option>Available Soon</option></select>
       <input type="text" placeholder="Search skill or name..." style="font-size:13px;background:var(--bg2);border:1.5px solid var(--brd);border-radius:8px;padding:8px 16px;color:var(--tx);outline:none;min-width:220px;transition:border-color .2s;font-family:'Inter',sans-serif" onfocus="this.style.borderColor='var(--b2)'" onblur="this.style.borderColor='var(--brd)'"/>
     </div>
-    <div class="tcg"><div class="tc" onclick="go('contact')">
+    <div class="tcg"><div class="tc" onclick="showIntro('Aryan K.')">
       <div class="tc-h"><div class="av">A</div><span class="ba open">Open to Work</span></div>
       <div class="tc-n">Aryan K.</div><div class="tc-r">Full-Stack Engineer</div>
       <ul class="tc-a"><li>Built logistics dashboard — ↓80% manual work</li><li>3 SaaS MVPs shipped solo in under 6 weeks</li><li>400+ GitHub stars on open source project</li></ul>
       <div class="tc-s"><span class="sk">React</span><span class="sk">Node.js</span><span class="sk">PostgreSQL</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div><div class="tc" onclick="go('contact')">
       <div class="tc-h"><div class="av">S</div><span class="ba open">Open to Work</span></div>
       <div class="tc-n">Sara M.</div><div class="tc-r">Product Designer</div>
       <ul class="tc-a"><li>Fintech onboarding redesign — ↑44% completion</li><li>Led design for 0→1 consumer app, 12k users</li><li>Built full design system from scratch</li></ul>
       <div class="tc-s"><span class="sk">Figma</span><span class="sk">UX Research</span><span class="sk">Design Systems</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div><div class="tc" onclick="go('contact')">
       <div class="tc-h"><div class="av">R</div><span class="ba soon">Available Soon</span></div>
       <div class="tc-n">Rohan V.</div><div class="tc-r">ML Engineer</div>
       <ul class="tc-a"><li>Churn model flagged 23% of at-risk accounts</li><li>NLP classifier trained on 2M+ records</li><li>Prod ML pipeline deployed, 99.2% uptime</li></ul>
       <div class="tc-s"><span class="sk">Python</span><span class="sk">PyTorch</span><span class="sk">MLOps</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div><div class="tc" onclick="go('contact')">
       <div class="tc-h"><div class="av">P</div><span class="ba open">Open to Work</span></div>
       <div class="tc-n">Priya N.</div><div class="tc-r">Growth Marketer</div>
       <ul class="tc-a"><li>Scaled D2C brand from 0 to Rs.40L MRR</li><li>Cut CAC by 60% via funnel optimization</li><li>8x organic traffic growth in 5 months</li></ul>
       <div class="tc-s"><span class="sk">SEO</span><span class="sk">Paid Ads</span><span class="sk">Analytics</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div><div class="tc" onclick="go('contact')">
       <div class="tc-h"><div class="av">K</div><span class="ba open">Open to Work</span></div>
       <div class="tc-n">Karan D.</div><div class="tc-r">Backend Engineer</div>
       <ul class="tc-a"><li>Real-time event pipeline for 500k DAU</li><li>API p99 latency: 800ms down to 40ms</li><li>Multi-tenant SaaS infra architected solo</li></ul>
       <div class="tc-s"><span class="sk">Go</span><span class="sk">AWS</span><span class="sk">Kafka</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div><div class="tc" onclick="go('contact')">
       <div class="tc-h"><div class="av">M</div><span class="ba soon">Available Soon</span></div>
       <div class="tc-n">Meera T.</div><div class="tc-r">Content Strategist</div>
       <ul class="tc-a"><li>Cold traffic conversion at 18%</li><li>Content system generating 50k monthly visits</li><li>Ghostwrote for 3 funded founders on LinkedIn</li></ul>
       <div class="tc-s"><span class="sk">Copywriting</span><span class="sk">SEO</span><span class="sk">Brand</span></div>
-      <button class="tc-b" onclick="event.stopPropagation();go('contact')">Request Intro &rarr;</button>
+      <button class="tc-b" onclick="event.stopPropagation();showIntro('Aryan K.')">Request Intro &rarr;</button>
     </div></div>
   </div>
 </div>
@@ -432,10 +487,10 @@ async function saveToSupabase(table, data) {
     <h2 class="rv">Tell us who<br/>you need to <span class="c">hire.</span></h2>
     <div style="max-width:600px" class="rv">
       <div class="fb" id="roleForm">
-        <div class="fr"><div class="fg"><label>Company Name</label><input type="text" placeholder="Your startup"/></div><div class="fg"><label>Email</label><input type="email" placeholder="founder@company.com"/></div></div>
-        <div class="fr"><div class="fg"><label>Role Title</label><input type="text" placeholder="e.g. Full-Stack Engineer"/></div><div class="fg"><label>Budget</label><input type="text" placeholder="e.g. Rs.8-12L/yr"/></div></div>
-        <div class="fg"><label>Required Skills</label><input type="text" placeholder="e.g. React, Node.js, PostgreSQL"/></div>
-        <div class="fr"><div class="fg"><label>Timeline</label><select><option>ASAP</option><option>2 weeks</option><option>1 month</option><option>Flexible</option></select></div><div class="fg"><label>Work Type</label><select><option>Remote</option><option>Onsite</option><option>Hybrid</option></select></div></div>
+        <div class="fr"><div class="fg"><label>Company Name</label><input type="text" id="r_company" placeholder="Your startup"/></div><div class="fg"><label>Email</label><input type="email" id="r_email" placeholder="founder@company.com"/></div></div>
+        <div class="fr"><div class="fg"><label>Role Title</label><input type="text" id="r_role" placeholder="e.g. Full-Stack Engineer"/></div><div class="fg"><label>Budget</label><input type="text" id="r_budget" placeholder="e.g. Rs.8-12L/yr"/></div></div>
+        <div class="fg"><label>Required Skills</label><input type="text" id="r_skills" placeholder="e.g. React, Node.js, PostgreSQL"/></div>
+        <div class="fr"><div class="fg"><label>Timeline</label><select id="r_timeline"><option>ASAP</option><option>2 weeks</option><option>1 month</option><option>Flexible</option></select></div><div class="fg"><label>Work Type</label><select id="r_worktype"><option>Remote</option><option>Onsite</option><option>Hybrid</option></select></div></div>
         <div class="fg"><label>Description</label><textarea placeholder="What you're building, who you need, what good looks like..."></textarea></div>
         <button class="bm-" style="width:100%;padding:14px;font-size:15px" onclick="sRole()">Submit Role &rarr;</button>
       </div>
@@ -452,14 +507,14 @@ async function saveToSupabase(table, data) {
     <p style="font-size:17px;color:var(--t2);margin-bottom:48px;animation:up .5s ease both .15s;max-width:460px;line-height:1.72">Apply to join the hirelRecruit talent community. We vet every applicant manually.</p>
     <div style="max-width:580px" class="rv">
       <div class="fb" id="applyForm">
-        <div class="fr"><div class="fg"><label>Full Name</label><input type="text" placeholder="Your name"/></div><div class="fg"><label>Role Focus</label><input type="text" placeholder="e.g. Full-Stack Engineer"/></div></div>
-        <div class="fg"><label>Achievement 1 &mdash; use metrics</label><input type="text" placeholder="What did you build? What was the outcome?"/></div>
-        <div class="fg"><label>Achievement 2</label><input type="text" placeholder="Another proof of work"/></div>
-        <div class="fg"><label>Achievement 3</label><input type="text" placeholder="Third proof"/></div>
-        <div class="fg"><label>Portfolio / GitHub</label><input type="text" placeholder="github.com/you, yourportfolio.com..."/></div>
-        <div class="fg"><label>Resume (optional)</label><input type="text" placeholder="Link to resume"/></div>
-        <div class="fg"><label>Intro Video (optional)</label><input type="text" placeholder="Loom link &mdash; 2-3 min"/></div>
-        <div class="fr"><div class="fg"><label>Availability</label><select><option>Open Now</option><option>2 weeks</option><option>1 month</option></select></div><div class="fg"><label>Work Preference</label><select><option>Remote</option><option>Onsite</option><option>Hybrid</option></select></div></div>
+        <div class="fr"><div class="fg"><label>Full Name</label><input type="text" id="a_name" placeholder="Your name"/></div><div class="fg"><label>Role Focus</label><input type="text" id="a_role" placeholder="e.g. Full-Stack Engineer"/></div></div>
+        <div class="fg"><label>Achievement 1 &mdash; use metrics</label><input type="text" id="a_ach1" placeholder="What did you build? What was the outcome?"/></div>
+        <div class="fg"><label>Achievement 2</label><input type="text" id="a_ach2" placeholder="Another proof of work"/></div>
+        <div class="fg"><label>Achievement 3</label><input type="text" id="a_ach3" placeholder="Third proof"/></div>
+        <div class="fg"><label>Portfolio / GitHub</label><input type="text" id="a_portfolio" placeholder="github.com/you, yourportfolio.com..."/></div>
+        <div class="fg"><label>Resume (optional)</label><input type="text" id="a_resume" placeholder="Link to resume"/></div>
+        <div class="fg"><label>Intro Video (optional)</label><input type="text" id="a_video" placeholder="Loom link &mdash; 2-3 min"/></div>
+        <div class="fr"><div class="fg"><label>Availability</label><select id="a_avail"><option>Open Now</option><option>2 weeks</option><option>1 month</option></select></div><div class="fg"><label>Work Preference</label><select id="a_workpref"><option>Remote</option><option>Onsite</option><option>Hybrid</option></select></div></div>
         <button class="bm-" style="width:100%;padding:14px;font-size:15px" onclick="sApply()">Apply to Join &rarr;</button>
         <p style="font-size:11px;color:var(--t3);text-align:center;margin-top:12px;font-family:'Space Mono',monospace">We review every application manually. You'll hear back within 5 business days.</p>
       </div>
@@ -479,58 +534,6 @@ async function saveToSupabase(table, data) {
       <div class="rv"><div class="lbl">Who We're Built For</div><p style="font-size:17px;color:var(--t2);line-height:1.75">Early-stage startups that move fast and need operators, not placeholders. Our job: Surface high-agency talent. Filter aggressively. Remove noise from hiring.</p></div>
       <div class="rv"><div class="lbl">What We Are Not</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px"><div style="background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:20px;text-align:center"><div style="font-size:13px;color:var(--t2)">A job board</div></div><div style="background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:20px;text-align:center"><div style="font-size:13px;color:var(--t2)">A resume marketplace</div></div><div style="background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:20px;text-align:center"><div style="font-size:13px;color:var(--t2)">Built for corporate HR</div></div></div><p style="font-size:16px;font-weight:600">hirelRecruit is a curated hiring layer for serious builders.</p></div>
       <div class="rv"><div class="lbl">Long-Term Vision</div><p style="font-size:17px;color:var(--t2);line-height:1.75">Make high-agency Indian talent visible to ambitious startups &mdash; and make hiring based on proof the default, not the exception.</p><br/><p style="font-size:16px;font-style:italic;line-height:1.75;margin-top:8px">"If you are building something real, we want to help you hire people who build."</p><p style="font-size:13px;color:var(--t3);font-family:'Space Mono',monospace;margin-top:8px">&mdash; That's the mission.</p></div>
-    </div>
-  </div>
-</div>
-
-<!-- BLOG -->
-<div class="page" id="page-blog">
-  <div class="w">
-    <div class="lbl" style="animation:up .5s ease both">Ideas &amp; Insights</div>
-    <h1 style="font-family:'Syne',sans-serif;font-size:clamp(40px,5.5vw,72px);font-weight:800;line-height:.97;letter-spacing:-2px;margin-bottom:16px;animation:up .6s ease both .1s">The hirelRecruit<br/><span style="color:var(--b2)">Blog.</span></h1>
-    <p style="font-size:16px;color:var(--t2);margin-bottom:40px;animation:up .5s ease both .15s;max-width:460px;line-height:1.7">Opinionated writing on hiring, talent, and building seriously.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;animation:up .5s ease both .2s" id="bbtns">
-      <button onclick="fb('',this)" style="font-size:13px;padding:7px 16px;border-radius:99px;border:1.5px solid var(--b2);background:var(--b2);color:#fff;cursor:pointer;font-family:'Inter',sans-serif">All</button>
-      <button onclick="fb('Hiring',this)" style="font-size:13px;padding:7px 16px;border-radius:99px;border:1.5px solid var(--brd);background:transparent;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif">Hiring</button>
-      <button onclick="fb('Talent',this)" style="font-size:13px;padding:7px 16px;border-radius:99px;border:1.5px solid var(--brd);background:transparent;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif">Talent</button>
-      <button onclick="fb('Founder Notes',this)" style="font-size:13px;padding:7px 16px;border-radius:99px;border:1.5px solid var(--brd);background:transparent;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif">Founder Notes</button>
-      <button onclick="fb('Case Studies',this)" style="font-size:13px;padding:7px 16px;border-radius:99px;border:1.5px solid var(--brd);background:transparent;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif">Case Studies</button>
-    </div>
-    <div class="bcg" id="bgrid"><div class="bc" data-cat="Hiring">
-      <div class="bi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,102,255,.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <div class="bb"><div class="bcat">Hiring</div><div class="bt">Why resumes are the worst hiring tool ever invented</div>
-      <div class="bd">A resume tells you where someone studied. It tells you nothing about whether they can build.</div>
-      <div class="bm"><span>Jan 2025</span><span>5 min read</span></div></div>
-    </div><div class="bc" data-cat="Talent">
-      <div class="bi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,102,255,.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <div class="bb"><div class="bcat">Talent</div><div class="bt">The self-taught builder's guide to getting hired in 2025</div>
-      <div class="bd">No degree. No internship. No problem. How to get in front of startups that hire on proof.</div>
-      <div class="bm"><span>Jan 2025</span><span>7 min read</span></div></div>
-    </div><div class="bc" data-cat="Founder Notes">
-      <div class="bi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,102,255,.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <div class="bb"><div class="bcat">Founder Notes</div><div class="bt">What we learned vetting 50 candidates in 30 days</div>
-      <div class="bd">Patterns, red flags, and what proof of work actually looks like when it's real.</div>
-      <div class="bm"><span>Feb 2025</span><span>6 min read</span></div></div>
-    </div><div class="bc" data-cat="Hiring">
-      <div class="bi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,102,255,.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <div class="bb"><div class="bcat">Hiring</div><div class="bt">Stop filtering for 5+ years. Here's what to filter for instead.</div>
-      <div class="bd">The best operators are often the youngest in the room. It's 2025.</div>
-      <div class="bm"><span>Feb 2025</span><span>4 min read</span></div></div>
-    </div><div class="bc" data-cat="Case Studies">
-      <div class="bi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,102,255,.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <div class="bb"><div class="bcat">Case Studies</div><div class="bt">How a Bangalore startup hired 3 engineers without a single resume</div>
-      <div class="bd">They reviewed work proofs instead of CVs. Here's exactly how it went.</div>
-      <div class="bm"><span>Mar 2025</span><span>8 min read</span></div></div>
-    </div></div>
-    <div style="margin-top:56px;border:1px solid var(--brd);border-radius:16px;padding:40px;text-align:center;background:var(--bg2)" class="rv">
-      <div class="lbl" style="text-align:center">Newsletter</div>
-      <h2 style="font-size:clamp(26px,3vw,38px);margin-bottom:10px">Sharp thinking,<br/><span class="c">your inbox.</span></h2>
-      <p style="font-size:14px;color:var(--t2);margin-bottom:28px">No spam. Just the best posts on hiring and talent.</p>
-      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap" id="nlf">
-        <input type="email" placeholder="your@email.com" style="font-size:14px;background:var(--bg);border:1.5px solid var(--brd);border-radius:9px;padding:12px 18px;color:var(--tx);outline:none;min-width:240px;transition:border-color .2s;font-family:'Inter',sans-serif" onfocus="this.style.borderColor='var(--b2)'" onblur="this.style.borderColor='var(--brd)'"/>
-        <button class="bm-" onclick="document.getElementById('nlf').style.display='none';document.getElementById('nlok').style.display='block'">Subscribe &rarr;</button>
-      </div>
-      <div id="nlok" style="display:none;font-family:'Space Mono',monospace;font-size:13px;color:#34D399;margin-top:12px">&#10003; You're subscribed.</div>
     </div>
   </div>
 </div>
@@ -571,8 +574,8 @@ async function saveToSupabase(table, data) {
       </div>
       <div class="rv">
         <div class="fb" id="contactForm">
-          <div class="fg"><label>Name</label><input type="text" placeholder="Your name"/></div>
-          <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+          <div class="fg"><label>Name</label><input type="text" id="c_name" placeholder="Your name"/></div>
+          <div class="fg"><label>Email</label><input type="email" id="c_email" placeholder="your@email.com"/></div>
           <div class="fg"><label>Message</label><textarea placeholder="What's on your mind?" style="min-height:120px"></textarea></div>
           <button class="bm-" style="width:100%;padding:14px;font-size:15px" onclick="sContact()">Send Message &rarr;</button>
         </div>
@@ -582,14 +585,14 @@ async function saveToSupabase(table, data) {
   </div>
 </div>
 
-<footer>
-  <div class="fg3">
-    <div><div class="flogo"><img src="data:image/png;base64,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" alt="logo"/><span>hirel<b style="color:var(--b2)">Recruit</b></span></div><p class="ftag">Built for people locked out of traditional hiring. Proof over paper.</p></div>
-    <div class="fc"><h5>Product</h5><a onclick="go('talent')">Talent</a><a onclick="go('companies')">For Companies</a><a onclick="go('apply')">Join Talent Pool</a><a onclick="go('mission')">Mission</a></div>
-    <div class="fc"><h5>Company</h5><a onclick="go('about')">About</a><a onclick="go('blog')">Blog</a><a onclick="go('contact')">Contact</a></div>
-    <div class="fc"><h5>Connect</h5><a href="mailto:hirelrecruit@gmail.com">hirelrecruit@gmail.com</a><a href="https://www.linkedin.com/company/hirelrecruit/" target="_blank">LinkedIn</a><a href="https://www.youtube.com/@hirelRecruit" target="_blank">YouTube</a><a href="https://www.linkedin.com/in/nashrae16/" target="_blank">Nash Rae</a></div>
+<footer style="border-top:1px solid var(--brd);padding:20px 48px;background:var(--bg2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:relative;z-index:1">
+  <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--t3)">&#169; 2025 hirelRecruit. All rights reserved.</span>
+  <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+    <a href="mailto:hirelrecruit@gmail.com" style="font-size:12px;color:var(--t2);font-family:'Space Mono',monospace">hirelrecruit@gmail.com</a>
+    <a href="https://www.linkedin.com/company/hirelrecruit/" target="_blank" style="font-size:12px;color:var(--t2);font-family:'Space Mono',monospace">LinkedIn</a>
+    <a href="https://www.youtube.com/@hirelRecruit" target="_blank" style="font-size:12px;color:var(--t2);font-family:'Space Mono',monospace">YouTube</a>
+    <a href="https://www.linkedin.com/in/nashrae16/" target="_blank" style="font-size:12px;color:var(--b2);font-weight:600;font-family:'Space Mono',monospace">Nash Rae &#8599;</a>
   </div>
-  <div class="fbot"><span class="fcp">&#169; 2025 hirelRecruit. All rights reserved.</span><span class="fpill">Early Access</span></div>
 </footer>
 
 <script>
@@ -609,59 +612,117 @@ function obs(){
 obs();
 async function sRole() {
   var btn = event.target;
+  var origText = btn.textContent;
   btn.textContent = 'Submitting...'; btn.disabled = true;
   var data = {
-    company: document.querySelector('#roleForm input[type=text]').value,
-    email: document.querySelector('#roleForm input[type=email]').value,
-    role_title: document.querySelectorAll('#roleForm input[type=text]')[1]?.value,
-    budget: document.querySelectorAll('#roleForm input[type=text]')[2]?.value,
-    skills: document.querySelectorAll('#roleForm input[type=text]')[3]?.value,
-    description: document.querySelector('#roleForm textarea')?.value,
+    company:      document.getElementById('r_company')?.value || '',
+    email:        document.getElementById('r_email')?.value || '',
+    role_title:   document.getElementById('r_role')?.value || '',
+    budget:       document.getElementById('r_budget')?.value || '',
+    skills:       document.getElementById('r_skills')?.value || '',
+    timeline:     document.getElementById('r_timeline')?.value || '',
+    work_type:    document.getElementById('r_worktype')?.value || '',
+    description:  document.querySelector('#roleForm textarea')?.value || '',
     submitted_at: new Date().toISOString(),
-    status: 'new'
+    status:       'new'
   };
-  await saveToSupabase('role_submissions', data);
-  document.getElementById('roleForm').style.display='none';
-  document.getElementById('roleOk').style.display='block';
+  console.log('Submitting role:', data);
+  try {
+    await saveToSupabase('role_submissions', data);
+    document.getElementById('roleForm').style.display = 'none';
+    document.getElementById('roleOk').style.display = 'block';
+  } catch(e) {
+    console.error('sRole error:', e);
+    alert('Submission failed: ' + (e.message || 'Unknown error. Check console.'));
+    btn.textContent = origText; btn.disabled = false;
+  }
 }
 async function sApply() {
   var btn = event.target;
+  var origText = btn.textContent;
   btn.textContent = 'Submitting...'; btn.disabled = true;
-  var inputs = document.querySelectorAll('#applyForm input[type=text]');
   var data = {
-    name: inputs[0]?.value,
-    role_focus: inputs[1]?.value,
-    achievement_1: inputs[2]?.value,
-    achievement_2: inputs[3]?.value,
-    achievement_3: inputs[4]?.value,
-    portfolio: inputs[5]?.value,
-    resume_link: inputs[6]?.value,
-    video_link: inputs[7]?.value,
-    submitted_at: new Date().toISOString(),
-    status: 'applied'
+    name:            document.getElementById('a_name')?.value || '',
+    role_focus:      document.getElementById('a_role')?.value || '',
+    achievement_1:   document.getElementById('a_ach1')?.value || '',
+    achievement_2:   document.getElementById('a_ach2')?.value || '',
+    achievement_3:   document.getElementById('a_ach3')?.value || '',
+    portfolio:       document.getElementById('a_portfolio')?.value || '',
+    resume_link:     document.getElementById('a_resume')?.value || '',
+    video_link:      document.getElementById('a_video')?.value || '',
+    availability:    document.getElementById('a_avail')?.value || '',
+    work_preference: document.getElementById('a_workpref')?.value || '',
+    submitted_at:    new Date().toISOString(),
+    status:          'applied'
   };
-  await saveToSupabase('candidate_applications', data);
-  document.getElementById('applyForm').style.display='none';
-  document.getElementById('applyOk').style.display='block';
+  console.log('Submitting application:', data);
+  try {
+    await saveToSupabase('candidate_applications', data);
+    document.getElementById('applyForm').style.display = 'none';
+    document.getElementById('applyOk').style.display = 'block';
+  } catch(e) {
+    console.error('sApply error:', e);
+    alert('Submission failed: ' + (e.message || 'Unknown error. Check console.'));
+    btn.textContent = origText; btn.disabled = false;
+  }
 }
 async function sContact() {
   var btn = event.target;
+  var origText = btn.textContent;
   btn.textContent = 'Sending...'; btn.disabled = true;
   var data = {
-    name: document.querySelector('#contactForm input[type=text]').value,
-    email: document.querySelector('#contactForm input[type=email]').value,
-    message: document.querySelector('#contactForm textarea').value,
+    name:         document.getElementById('c_name')?.value || '',
+    email:        document.getElementById('c_email')?.value || '',
+    message:      document.querySelector('#contactForm textarea')?.value || '',
     submitted_at: new Date().toISOString()
   };
-  await saveToSupabase('contact_messages', data);
-  document.getElementById('contactForm').style.display='none';
-  document.getElementById('contactOk').style.display='block';
+  console.log('Submitting contact:', data);
+  try {
+    await saveToSupabase('contact_messages', data);
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('contactOk').style.display = 'block';
+  } catch(e) {
+    console.error('sContact error:', e);
+    alert('Message failed: ' + (e.message || 'Unknown error. Check console.'));
+    btn.textContent = origText; btn.disabled = false;
+  }
 }
+
+function toggleMenu(){
+  document.getElementById('mob-menu').classList.toggle('open');
+  document.getElementById('hbg').classList.toggle('open');
+}
+function showIntro(name){
+  document.getElementById('introModalText').textContent = 'Interested in ' + name + '? Reach out directly and mention their name:';
+  document.getElementById('introModal').classList.add('open');
+}
+function closeIntro(e){
+  if(e.target === document.getElementById('introModal')) document.getElementById('introModal').classList.remove('open');
+}
+
 function fb(cat,btn){
   document.querySelectorAll('#bgrid .bc').forEach(function(c){c.style.display=(!cat||c.dataset.cat===cat)?'':'none'});
   document.querySelectorAll('#bbtns button').forEach(function(b){b.style.background='transparent';b.style.color='var(--t2)';b.style.borderColor='var(--brd)'});
   btn.style.background='var(--b2)';btn.style.color='#fff';btn.style.borderColor='var(--b2)';
 }
 </script>
+
+<!-- INTRO MODAL -->
+<div class="modal-bg" id="introModal" onclick="closeIntro(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('introModal').classList.remove('open')">&#x2715;</button>
+    <h3>Request Intro</h3>
+    <p id="introModalText">Interested in connecting with this talent? Reach out directly:</p>
+    <a href="mailto:hirelrecruit@gmail.com" class="modal-contact-link">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,102,255,.1);border:1px solid var(--brd2);display:flex;align-items:center;justify-content:center;font-size:16px">✉</div>
+      <div><b>hirelrecruit@gmail.com</b><span>Email us to request an intro</span></div>
+    </a>
+    <a href="https://www.linkedin.com/company/hirelrecruit/" target="_blank" class="modal-contact-link">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,102,255,.1);border:1px solid var(--brd2);display:flex;align-items:center;justify-content:center;font-size:16px">in</div>
+      <div><b>LinkedIn</b><span>Message us on LinkedIn</span></div>
+    </a>
+    <p style="font-size:11px;color:var(--t3);margin-top:16px;font-family:'Space Mono',monospace">We typically respond within 24 hours.</p>
+  </div>
+</div>
 </body>
 </html>
